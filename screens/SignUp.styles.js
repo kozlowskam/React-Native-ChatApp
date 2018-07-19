@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { blue } from "ansi-colors";
 
 export default StyleSheet.create({
   outerContainer: {
@@ -23,7 +22,7 @@ export default StyleSheet.create({
     alignSelf: "center",
     padding: 5
   },
-  button: {
+  buttonPrimary: {
     height: 36,
     backgroundColor: "grey",
     borderColor: "grey",
@@ -32,5 +31,21 @@ export default StyleSheet.create({
     marginBottom: 10,
     alignSelf: "center",
     justifyContent: "center"
+  },
+  buttonSecondary: {
+    height: 36,
+    backgroundColor: "#6b47ec",
+    borderColor: "#6b47ec",
+    borderWidth: 3,
+    borderRadius: 3,
+    marginBottom: 10,
+    alignSelf: "center",
+    justifyContent: "center"
+  },
+  error: {
+    fontSize: 18,
+    alignSelf: "center",
+    marginBottom: 30,
+    color: "#FF0000"
   }
 });

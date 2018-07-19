@@ -1,15 +1,17 @@
 import React, { Component } from "react";
-import {
+import ReactNative, {
   View,
   Text,
   TouchableHighlight,
   KeyboardAvoidingView
 } from "react-native";
+import { Actions } from "react-native-router-flux";
 import t from "tcomb-form-native";
 import Person, { formOptions } from "../models/Person";
-import styles from "./SignUp.styles";
+import loadUser from "../actions/users/load";
 import signUp from "../actions/users/sign-up";
 import { connect } from "react-redux";
+import styles from "./SignUp.styles";
 
 export class SignUp extends Component {
   constructor(props) {
@@ -19,6 +21,10 @@ export class SignUp extends Component {
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = { newUser: null };
+  }
+
+  componentWillMount() {
+    this.props.loadUser();
   }
 
   componentDidMount() {
@@ -44,11 +50,17 @@ export class SignUp extends Component {
 
   render() {
     const Form = t.form.Form;
+    const { user, loading } = this.props;
 
     return (
       <View style={styles.container}>
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
           <Text style={styles.title}>Sign up for ShatApp</Text>
+          {user && user.error ? (
+            <Text style={styles.error}>
+              {user.error.name} {user.error.message}
+            </Text>
+          ) : null}
 
           <Form
             ref="form"
@@ -65,14 +77,22 @@ export class SignUp extends Component {
           >
             <Text style={styles.buttonText}>Sign up</Text>
           </TouchableHighlight>
+          <TouchableHighlight
+            disabled={loading}
+            style={styles.buttonSecondary}
+            onPress={Actions.signIn}
+            underlayColor="#99d9f4"
+          >
+            <Text style={styles.buttonText}>Sign in</Text>
+          </TouchableHighlight>
         </KeyboardAvoidingView>
       </View>
     );
   }
 }
-const mapStateToProps = ({ loading }) => ({ loading });
+const mapStateToProps = ({ user, loading }) => ({ user, loading });
 
 export default connect(
   mapStateToProps,
-  { signUp }
+  { loadUser, signUp }
 )(SignUp);

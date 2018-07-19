@@ -1,5 +1,6 @@
 import API from "../../lib/api";
 import loadUser from "./load";
+import { Actions } from "react-native-router-flux";
 import { API_LOADING, API_READY, API_ERROR } from "../../middleware/api";
 
 export const USER_SIGNED_IN = "USER_SIGNED_IN";
